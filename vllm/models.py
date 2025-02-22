@@ -5,6 +5,9 @@ INTERNVL2_5 = "OpenGVLab/InternVL2_5-8B"
 YI_CODER_CHAT = "01-ai/Yi-Coder-9B-Chat"
 MISTRAL_INSTRUCT = "mistralai/Mistral-7B-Instruct-v0.3"
 DEEPSEEK_R1 = "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
+DEEPSEEK_R1_1B = "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
+UNSLOTH_DEEPSEEK_R1_1B = "unsloth/DeepSeek-R1-Distill-Qwen-1.5B"
+UNSLOTH_DEEPSEEK_R1_7B = "unsloth/DeepSeek-R1-Distill-Qwen-7B"
 
 internvl = VLLM(
     name=INTERNVL2_5.split("/")[-1],
@@ -68,3 +71,50 @@ deepseek_r1 = VLLM(
         max_model_len=8096,
     ),
 )
+
+
+deepseek_r1_1b = VLLM(
+    name=DEEPSEEK_R1_1B.split("/")[-1],
+    cpu=8,
+    memory="16Gi",
+    gpu="A100-40",
+    gpu_count=1,
+    vllm_args=VLLMArgs(
+        model=DEEPSEEK_R1_1B,
+        served_model_name=[DEEPSEEK_R1_1B],
+        task="generate",
+        trust_remote_code=True,
+        max_model_len=8096,
+    ),
+)
+
+unsloth_deepseek_r1_1b = VLLM(
+    name="UNSLOTH-"+UNSLOTH_DEEPSEEK_R1_1B.split("/")[-1],
+    cpu=8,
+    memory="16Gi",
+    gpu="A100-40",
+    gpu_count=1,
+    vllm_args=VLLMArgs(
+        model=UNSLOTH_DEEPSEEK_R1_1B,
+        served_model_name=[UNSLOTH_DEEPSEEK_R1_1B],
+        task="generate",
+        trust_remote_code=True,
+        max_model_len=8096,
+    ),
+)
+
+unsloth_deepseek_r1_7b = VLLM(
+    name="UNSLOTH-"+UNSLOTH_DEEPSEEK_R1_7B.split("/")[-1],
+    cpu=8,
+    memory="16Gi",
+    gpu="A100-40",
+    gpu_count=1,
+    vllm_args=VLLMArgs(
+        model=UNSLOTH_DEEPSEEK_R1_7B,
+        served_model_name=[UNSLOTH_DEEPSEEK_R1_7B],
+        task="generate",
+        trust_remote_code=True,
+        max_model_len=8096,
+    ),
+)
+
